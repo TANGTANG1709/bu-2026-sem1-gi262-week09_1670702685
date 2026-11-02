@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Assignment
 {
@@ -93,12 +94,24 @@ namespace Assignment
 
         public string ASN01_ReverseString(string str)
         {
-            throw new NotImplementedException();
+            Stack<char> stack = new Stack<char>();
+            foreach (char character in str)
+            {
+                stack.Push(character);
+            }
+
+            StringBuilder reversed = new StringBuilder(str.Length);
+            while (stack.Count > 0)
+            {
+                reversed.Append(stack.Pop());
+            }
+
+            return reversed.ToString();
         }
 
         public bool ASN02_StackPalindrome(string str)
         {
-            throw new NotImplementedException();
+            return str == ASN01_ReverseString(str);
         }
 
         #endregion
@@ -107,7 +120,38 @@ namespace Assignment
 
         public bool EX01_ParenthesesChecker(string str)
         {
-            throw new NotImplementedException();
+            Stack<char> openingBrackets = new Stack<char>();
+
+            foreach (char bracket in str)
+            {
+                switch (bracket)
+                {
+                    case '(':
+                    case '[':
+                    case '{':
+                        openingBrackets.Push(bracket);
+                        break;
+
+                    case ')':
+                    case ']':
+                    case '}':
+                        if (openingBrackets.Count == 0)
+                        {
+                            return false;
+                        }
+
+                        char openingBracket = openingBrackets.Pop();
+                        if ((bracket == ')' && openingBracket != '(')
+                            || (bracket == ']' && openingBracket != '[')
+                            || (bracket == '}' && openingBracket != '{'))
+                        {
+                            return false;
+                        }
+                        break;
+                }
+            }
+
+            return openingBrackets.Count == 0;
         }
 
         #endregion
